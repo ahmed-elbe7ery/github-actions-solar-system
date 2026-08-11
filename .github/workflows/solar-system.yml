@@ -9,7 +9,7 @@ on:
 
 env:
     MONGO_URI: mongodb+srv://supercluster.d83jj.mongodb.net/superData
-    # MONGO_USERNAME: superuser
+    MONGO_USERNAME: superuser
     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
     
 jobs:
@@ -37,3 +37,26 @@ jobs:
           with:
             name: Mocha-Test-Result
             path: test-results.xml
+
+
+    Code-Coverage:
+       runs-on: ubuntu-latest
+       steps:
+       - name: checkout the repository
+         uses: actions/checkout@v4
+
+       - name: setup NodeJS of version 18              
+         uses: actions/setup-node@v4 
+         with: 
+           node-version: 18
+
+       - name: Run Code-coverage
+         run: npm run code-coverage
+         continue-on-error: true
+
+       - name: Upload code-coverage reports
+         uses: actions/upload-artifact@v4
+         with:
+           name: Code-Coverage-Result
+           path: coverage
+           retention-days: 5    
