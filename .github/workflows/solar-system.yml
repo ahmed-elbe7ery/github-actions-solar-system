@@ -67,7 +67,7 @@ jobs:
            name: Code-Coverage-Result
            path: coverage
            retention-days: 5   
-
+           
 
     docker:
       runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
           with:
             registry: ghcr.io
             username: ${{github.repository_owner}}
-            password: ${{secrets.TOKEN}}     
+            password: ${{secrets.GITHUB_TOKEN}}     
 
         - name: docker build and push 
           uses: docker/build-push-action@v6
