@@ -120,8 +120,17 @@ jobs:
           with:
             version: 'v1.26.0'
 
+        - name: Get CCE cluster credentials
+          uses: huaweicloud/cce-credential-action@v1.0.0
+          with:
+            ak: ${{ secrets.HUAWEI_ACCESS_KEY }}
+            sk: ${{ secrets.HUAWEI_SECRET_KEY }}
+            region: eu-west-0
+            project_id: ${{ secrets.HUAWEI_PROJECT_ID }}
+            cluster_id: ${{ secrets.HUAWEI_CLUSTER_ID }}    
+
         - name: featch kubernetes cluster details 
           run: |
             kubectl version --short    
             echo ---------------------------
-              kubectl get nodes
+            kubectl get nodes
