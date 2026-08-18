@@ -106,4 +106,22 @@ jobs:
           with:
             context: .
             push: true
-            tags: ${{ secrets.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}    
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}   
+
+    dev-deploy:
+      needs: docker        
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout the repository
+          uses: actions/checkout@v4 
+
+        - name: install kubectl CLI
+          uses: azure/setup-kubectl@v3 
+          with:
+            version: 'v1.26.0'
+
+        - name: featch kubernetes cluster details 
+          run: |
+            kubectl version --short    
+            echo ---------------------------
+              kubectl get nodes
