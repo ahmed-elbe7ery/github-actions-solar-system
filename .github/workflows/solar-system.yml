@@ -24,8 +24,8 @@ jobs:
         
             env:
                 MONGO_URI: 'mongodb://localhost:27017/superData'
-                MONGO_USERNAME: non-prod-user
-                MONGO_PASSWORD: non-prod-password      
+                MONGO_USERNAME: superuser
+                MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}      
            
         steps:
         - name: Checkout Repository
