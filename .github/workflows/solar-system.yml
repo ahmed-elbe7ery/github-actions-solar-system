@@ -163,7 +163,7 @@ jobs:
             NAMESPACE: ${{ vars.NAMESPACE }}
             REPLICAS: ${{ vars.REPLICAS }}
             IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-            INGRESS_IP: 192.168.0.246
+            INGRESS_IP: 90.84.195.76
 
         - name: check files 
           run: | 
@@ -204,5 +204,4 @@ jobs:
             echo $URL
             echo "----------------------------------------"
             curl https://$URL/live -s -k | jq -r .status | grep -i live
-            
             
