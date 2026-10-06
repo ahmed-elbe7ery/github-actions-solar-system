@@ -117,7 +117,9 @@ jobs:
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}   
 
     dev-deploy:
-      needs: docker        
+      needs: docker 
+      outputs: 
+        APP_INGRESS_URL: ${{steps.set-ingress-host-address.outputs.APP_INGRESS_HOST}}
       runs-on: ubuntu-latest
       steps:
         - name: checkout the repository
@@ -181,3 +183,24 @@ jobs:
         - name: Deploy to Dev Env
           run: |
               kubectl apply -f kubernetes/development
+      
+        - name: Set App Ingress Host URL
+          id: set-ingress-host-address
+          run: |
+            echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress | awk '$1=="solar-system" {print $3}')"  >> "$GITHUB_OUTPUT"      
+
+
+
+
+    integration-testing:
+        name: Dev Integration Testing
+        needs: dev-deploy
+        runs-on: ubuntu-latest
+        steps:
+        - name: Test URL Output using CURL and JQ
+          env: 
+            URL:${{needs.dev-deploy.outputs.APP_INGRESS_URL}}
+          run: |
+            echo $URL
+            echo "----------------------------------------"
+            curl https://$URL/live -s -k | jq -r .status | grep -i live
