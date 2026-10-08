@@ -284,6 +284,8 @@ jobs:
             echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress | awk '$1=="solar-system" {print $3}')"  >> "$GITHUB_OUTPUT"      
 
     prod-integration-testing:
+
+      
         name: prod Integration Testing
         if: github.ref == 'refs/heads/main'
         needs: prod-deploy
