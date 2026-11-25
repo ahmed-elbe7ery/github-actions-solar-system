@@ -198,8 +198,8 @@ jobs:
         if: contains(github.ref, 'feature/')
         name: Dev Integration Testing
         needs: dev-deploy
-         runs-on: ubuntu-latest
-         steps:
+        runs-on: ubuntu-latest
+        steps:
          - name: Test URL Output using CURL and JQ
            env: 
              URL: ${{needs.dev-deploy.outputs.APP_INGRESS_URL}}
