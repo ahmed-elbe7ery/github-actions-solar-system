@@ -192,7 +192,12 @@ jobs:
         - name: Set App Ingress Host URL
           id: set-ingress-host-address
           run: |
-            echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress | awk '$1=="solar-system" {print $3}')"  >> "$GITHUB_OUTPUT"      
+            echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress | awk '$1=="solar-system" {print $3}')"  >> "$GITHUB_OUTPUT"   
+            
+        - name: Display GitHub context    
+          env:
+            GITHUB_CONTEXT: ${{ toJson(github) }}
+          run: echo "$GITHUB_CONTEXT"
 
     dev-integration-testing:
         if: contains(github.ref, 'feature/')
