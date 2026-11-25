@@ -136,7 +136,6 @@ jobs:
           with:
             version: 'v1.26.0'
 
-
         
         - name: Configure kubeconfig
           run: |

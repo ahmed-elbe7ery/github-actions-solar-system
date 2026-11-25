@@ -2,13 +2,13 @@ name: Testing - Reusable Workflow
 on: 
   workflow_call:
     inputs:
-        ingress_url:
+        ingress-url:
             description: Provide the Ingress URL
             type: string
             required: true 
 
 jobs:
-    dev-integration-testing:
+    integration-test:
         # if: contains(github.ref, 'feature/')
         # name: Dev Integration Testing
         # needs: dev-deploy
